@@ -20,7 +20,7 @@ void InitSysTick(void) //1 mS
 
 void SysTick_Handler(void)
 {
-	static int16_t tempDelay = DELAY1S;
+	static int16_t tempDelay = DELAY1S*20;
 	static int16_t statusCalentadorDelay = DELAY500MS;
 	static int16_t LCD_Delay = DELAY500MS;
 	static int16_t LCD_Calentando_Delay = 0;

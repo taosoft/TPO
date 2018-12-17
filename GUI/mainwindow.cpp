@@ -270,8 +270,8 @@ void MainWindow::on_btnLeerTarjetaSD_clicked()
             QStringList lista = text.split(":");
             qreal x = lista.value(0).toInt();
             qreal y = lista.value(1).toInt()/10;
-            int valor1 = lista.value(1).toInt() % 10;
-            float valor = float(valor1/10);
+            float valor1 = lista.value(1).toInt() % 10;
+            float valor = valor1/10;
             y += double(valor);
             seriesData.append(QPointF(x, y));
         }
@@ -314,6 +314,24 @@ void MainWindow::on_btnLeerTarjetaSD_clicked()
             ui->chartViewHSD->setRenderHint(QPainter::Antialiasing);
 
             seriesHSD->replace(seriesData);
+        }
+        else
+        {
+            QValueAxis *axisX = new QValueAxis;
+            QValueAxis *axisY = new QValueAxis;
+            axisX->setRange(0.1, 10.0);
+            axisY->setRange(-1.0, 1.0);
+            series = new QLineSeries();
+            series->setColor(QColor(0, 0, 222));
+            chartHSD = new QChart();
+            chartHSD->addSeries(series);
+            chartHSD->setTitle("Historial de muestras de temperatura");
+            chartHSD->addAxis(axisX, Qt::AlignBottom);
+            chartHSD->addAxis(axisY, Qt::AlignLeft);
+            series->attachAxis(axisX);
+            series->attachAxis(axisY);
+            ui->chartViewHSD->setChart(chartHSD);
+            ui->chartViewHSD->setRenderHint(QPainter::Antialiasing);
         }
     }
 }

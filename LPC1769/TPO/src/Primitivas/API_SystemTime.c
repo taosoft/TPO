@@ -116,7 +116,7 @@ int8_t Time_GetTimezone(void)
 void Time_GetDateTime(DateTime_t *dateTime)
 {
 	dateTime->sec = RTC_GetSec();
-	dateTime->month = RTC_GetMonth();
+	dateTime->min = RTC_GetMin();
 	dateTime->hour = RTC_GetHour();
 	dateTime->day = RTC_GetDayOfMonth();
 	dateTime->month = RTC_GetMonth();

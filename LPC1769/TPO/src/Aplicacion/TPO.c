@@ -17,17 +17,17 @@
 FATFS fat;
 FRESULT res;
 
-int main(void) {
-
+int main(void)
+{
 	Inicializacion();
 
-    while(1) {
+    while(1)
+    {
     	MdE_Temp();
     	MdE_LCD();
     	MdE_ESP();
     	if(flagSendTempReady)
     	{
-
     		//Escritura en SD Card
     		FIL *file;
     		uint32_t data = 0;
@@ -46,5 +46,6 @@ int main(void) {
     		flagSendTempReady = 0;
     	}
     }
+
     return 0 ;
 }
