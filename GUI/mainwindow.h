@@ -1,42 +1,83 @@
 #ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+    #define MAINWINDOW_H
 
-#include <QMainWindow>
+    #include <QMainWindow>
+    #include <QtCharts/QCategoryAxis>
+    #include <QtCharts/QtCharts>
+    #include <QtCharts/QLineSeries>
+    #include <QTimer>
+    #include <QVector>
 
-namespace Ui {
-class MainWindow;
-}
+    #include <QTcpSocket>
 
-class MainWindow : public QMainWindow
-{
-    Q_OBJECT
+    using namespace QtCharts;
 
-public:
-    explicit MainWindow(QWidget *parent = 0);
-    ~MainWindow();
+    namespace Ui {
+    class MainWindow;
+    }
 
-private slots:
+    class QTcpSocket;
 
-    void on_btnTempMas_pressed();
+    class MainWindow : public QMainWindow
+    {
+        Q_OBJECT
 
-    void doIncrement();
+    public:
+        explicit MainWindow(QWidget *parent = nullptr);
+        ~MainWindow();
 
-    void on_btnTempMas_released();
+    private slots:
 
-    void on_btnTempMenos_pressed();
+        //Botonera de temperatura deseada
+        void on_btnTempMas_pressed();
+        void doIncrement();
+        void on_btnTempMas_released();
+        void on_btnTempMenos_pressed();
+        void doDecrement();
+        void on_btnTempMenos_released();
 
-    void doDecrement();
+        //Chart real time
+        void realtime(double);
 
-    void on_btnTempMenos_released();
+        //Tcp Client
+        void on_btnConnectToServer_clicked();
+        void on_ClientConnected();
+        void on_ClientDisconnected();
+        void on_ClientStateChange(QAbstractSocket::SocketState);
+        void on_ClientError(QAbstractSocket::SocketError);        
+        void on_btnConfigurarRTCStick_clicked();
+        void on_btnDisconnectFromServer_clicked();
 
-private:
-    Ui::MainWindow *ui;
-    int isFloat(double temp);
-    void checkLcdFormat();
+        //Chart historial en SD
+        void on_btnLeerTarjetaSD_clicked();
+        void on_btnBorrarTarjetaSD_clicked();
 
-    QTimer *timerIncrement;
-    QTimer *timerDecrement;
-    int timerTimeout;
-};
+    private:
+        Ui::MainWindow *ui;
+
+        //Temperatura
+        int isFloat(double temp);
+        bool sendNewConfigTemp(void);
+        void checkLcdFormat();
+
+        //Botonera temperatura
+        QTimer *timerIncrement;
+        QTimer *timerDecrement;
+        int timerTimeout;
+
+        //Grafico en tiempo real
+        QChart *chart;
+        QLineSeries *series;
+
+        //Gráfico historial SD
+        QChart *chartHSD;
+        QLineSeries *seriesHSD;
+        QVector<QPointF> seriesData;
+        QTimer timer;
+
+        //Cliente TCP
+        QTcpSocket *mSocket;
+        void analyzeRcvData(QString data);
+    };
 
 #endif // MAINWINDOW_H
