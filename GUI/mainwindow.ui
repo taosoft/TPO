@@ -160,8 +160,8 @@ background-color: white;
      <widget class="QLCDNumber" name="lcdTemp">
       <property name="geometry">
        <rect>
-        <x>340</x>
-        <y>150</y>
+        <x>330</x>
+        <y>60</y>
         <width>501</width>
         <height>191</height>
        </rect>
@@ -189,8 +189,8 @@ background-color: blue;
      <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
-        <x>440</x>
-        <y>380</y>
+        <x>430</x>
+        <y>290</y>
         <width>302</width>
         <height>131</height>
        </rect>
@@ -347,7 +347,7 @@ background-color: white;
 </string>
       </property>
       <property name="text">
-       <string/>
+       <string>Temperatura</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>

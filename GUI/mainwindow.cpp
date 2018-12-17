@@ -88,7 +88,8 @@ int MainWindow::isFloat(double temp)
     QByteArray temperatura = QByteArray::number(temp);
     for(int i = 0; i < temperatura.length(); i++)
     {
-        if(temperatura[i] == '.') return 1;
+        if(temperatura[i] == '.')
+            return 1;
     }
     return 0;
 }
@@ -194,7 +195,6 @@ void MainWindow::on_btnConnectToServer_clicked()
         if(mSocket->state() == QAbstractSocket::UnconnectedState)
         {
             mSocket->connectToHost("192.168.8.101", 8080);
-            //mSocket->connectToHost("localhost", 8080);
         }
     }
 }

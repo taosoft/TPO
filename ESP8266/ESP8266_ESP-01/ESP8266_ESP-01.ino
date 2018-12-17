@@ -8,11 +8,11 @@ const char* ssid = "HUAWEI-231D";
 const char* password = "23223462";
 
 //SNTP SERVER
-unsigned int localPort = 2390; // local port to listen for UDP packets
-IPAddress timeServerIP; // 0.south-america.pool.ntp.org NTP server address
+unsigned int localPort = 2390;
+IPAddress timeServerIP;
 const char* ntpServerName = "0.south-america.pool.ntp.org";
-const int NTP_PACKET_SIZE = 48; // NTP time stamp is in the first 48 bytes of the message
-byte packetBuffer[ NTP_PACKET_SIZE]; //buffer to hold incoming and outgoing packets
+const int NTP_PACKET_SIZE = 48;      // NTP time stamp is in the first 48 bytes of the message
+byte packetBuffer[NTP_PACKET_SIZE];
 WiFiUDP udp;
 
 //TCP Server
@@ -60,7 +60,7 @@ unsigned long sendNTPpacket(IPAddress& address)
     packetBuffer[13] = 0x4E;
     packetBuffer[14] = 49;
     packetBuffer[15] = 52;
-    udp.beginPacket(address, 123); //NTP requests are to port 123
+    udp.beginPacket(address, 123);  //NTP requests are to port 123
     udp.write(packetBuffer, NTP_PACKET_SIZE);
     udp.endPacket();
 }
@@ -68,16 +68,14 @@ unsigned long sendNTPpacket(IPAddress& address)
 unsigned long getUnixTime(void)
 {    
     WiFi.hostByName(ntpServerName, timeServerIP); 
-    sendNTPpacket(timeServerIP);  // send an NTP packet to a time server
+    sendNTPpacket(timeServerIP);
     delay(500);          
     int cb = udp.parsePacket();
     if (!cb) 
-    {
         return 0;
-    }
     else 
     {
-        udp.read(packetBuffer, NTP_PACKET_SIZE); // read the packet into the buffer
+        udp.read(packetBuffer, NTP_PACKET_SIZE);
     
         unsigned long highWord = word(packetBuffer[40], packetBuffer[41]);
         unsigned long lowWord = word(packetBuffer[42], packetBuffer[43]);
@@ -112,7 +110,6 @@ void checkClientRcvData(String line)
                 int temp = line.substring(5, (5 + largoTemp)).toInt();
                 if(temp >= 0 && temp <= 100)
                 {
-                    //client.print("$$$t" + String(largoTemp) + String(temp) + "\n");
                     Serial.println("$$$t" + String(largoTemp) + String(temp) + "\n");
                 }
             }
